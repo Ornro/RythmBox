@@ -1,15 +1,21 @@
-.gradle
-/local.properties
-/.idea/workspace.xml
-.DS_Store
+*.class
 
+# Package Files #
+*.jar
+*.war
+*.ear
 *.iml
 *.ipr
 *.iws
+*.so
+.classpath
+.project
+.settings/
+.gradle/
 .idea/
-local.properties
-
-# Generic Android ignores
+build/
 bin/
-target
+out/
 gen/
+local.properties
+!gradle/
