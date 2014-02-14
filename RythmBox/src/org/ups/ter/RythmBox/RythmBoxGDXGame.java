@@ -33,6 +33,9 @@ public class RythmBoxGDXGame implements ApplicationListener {
 		sprite.setSize(0.9f, 0.9f * sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		sprite.setPosition(-sprite.getWidth()/2, -sprite.getHeight()/2);
+		
+		MusicPlayer m = new MusicPlayer();
+		m.playMusic("data/music/shelter.mp3");
 	}
 
 	@Override
