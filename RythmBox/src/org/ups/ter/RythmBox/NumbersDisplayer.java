@@ -1,5 +1,11 @@
 package org.ups.ter.RythmBox;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.ups.ter.RythmBox.circlemanager.Circle;
+import org.ups.ter.RythmBox.circlemanager.CircleManager;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -10,31 +16,30 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 
 public class NumbersDisplayer implements ApplicationListener {
 	private SpriteBatch batch;
-	private Texture[] numberTextures;
+	
+    private Set<Circle> circles;
+	private CircleManager circleManager;
 	
 	@Override
-	public void create() {		
-		float w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
+	public void create() {
+		
+		circleManager = new CircleManager(Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight());
 		
 		batch = new SpriteBatch();
 		
-		for (int i = 1; i <= 6; i++) {
-			numberTextures[i] = new Texture(Gdx.files.internal("data/numbers/number-1.png"));
-			numberTextures[i].setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		}
+    	circles = circleManager.generateNewCircles();
 		
+		scheduleCirclesRefresh();
 	}
 
 	@Override
 	public void dispose() {
-		batch.dispose();
-		for (int i = 1; i <= 6; i++) {
-			numberTextures[i].dispose();
-		}
 	}
 
 	@Override
@@ -43,7 +48,7 @@ public class NumbersDisplayer implements ApplicationListener {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		batch.begin();
-		showCircles();
+		drawCircles();
 		batch.end();
 	}
 
@@ -59,19 +64,21 @@ public class NumbersDisplayer implements ApplicationListener {
 	public void resume() {
 	}
 	
+	private void scheduleCirclesRefresh() {
+		float delay = 3;
 
-	private void showCircles() {
-		int baseX = 50;
-		int baseY = 50;
-		
-		int circlesNumber = MathUtils.random(5) + 1;
-		
-		for(int i = 0; i <= circlesNumber; circlesNumber++) {
-			batch.draw(numberTextures[i], randomizePosition(baseX), randomizePosition(baseY));	
+		Timer.schedule(new Task(){
+			@Override
+		    public void run() {
+		    	circles = circleManager.generateNewCircles();
+		    }
+		}, delay, delay);	
+	}
+	
+	private void drawCircles() {
+		for(Circle c : circles) {
+			batch.draw(c.getTexture(), c.getPosX(), c.getPosY());	
 		}
 	}
 	
-	private int randomizePosition(int basePosition) {
-		return MathUtils.random(512);
-	}
 }
