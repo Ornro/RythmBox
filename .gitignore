@@ -6,8 +6,9 @@
 *.dex
 
 *.class
+Thumbs.db
 
-bin/
+*/bin/
 gen/
 build/
 
