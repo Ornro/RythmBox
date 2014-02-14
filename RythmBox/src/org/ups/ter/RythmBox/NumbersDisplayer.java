@@ -9,10 +9,11 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 
 public class NumbersDisplayer implements ApplicationListener {
 	private SpriteBatch batch;
-	private Texture texture;
+	private Texture[] numberTextures;
 	
 	@Override
 	public void create() {		
@@ -21,14 +22,19 @@ public class NumbersDisplayer implements ApplicationListener {
 		
 		batch = new SpriteBatch();
 		
-		texture = new Texture(Gdx.files.internal("data/numbers/number-1.png"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		for (int i = 1; i <= 6; i++) {
+			numberTextures[i] = new Texture(Gdx.files.internal("data/numbers/number-1.png"));
+			numberTextures[i].setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		}
+		
 	}
 
 	@Override
 	public void dispose() {
 		batch.dispose();
-		texture.dispose();
+		for (int i = 1; i <= 6; i++) {
+			numberTextures[i].dispose();
+		}
 	}
 
 	@Override
@@ -58,12 +64,14 @@ public class NumbersDisplayer implements ApplicationListener {
 		int baseX = 50;
 		int baseY = 50;
 		
-		batch.draw(texture, baseX, baseY);
-		batch.draw(texture, baseX+60, baseY+120);
-		batch.draw(texture, baseX+200, baseY+120);		
+		int circlesNumber = MathUtils.random(5) + 1;
+		
+		for(int i = 0; i <= circlesNumber; circlesNumber++) {
+			batch.draw(numberTextures[i], randomizePosition(baseX), randomizePosition(baseY));	
+		}
 	}
 	
-	private void randomizePosition(int baseX, int baseY) {
-		
+	private int randomizePosition(int basePosition) {
+		return MathUtils.random(512);
 	}
 }
