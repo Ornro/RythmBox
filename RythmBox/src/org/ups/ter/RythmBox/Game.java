@@ -20,11 +20,14 @@ public class Game implements ApplicationListener{
     DanceAnimation                  vador; 
     
     SpriteBatch                     spriteBatch;
+    Texture							background;
     
     float stateTime;  // number of seconds since the animation started
     
     @Override
     public void create() {
+    	background = new Texture(Gdx.files.internal("data/backgrounds/bucarest.png"));
+        
     	normalGuy1 = new DanceAnimation("data/sprites/dancing-guy.png");
 		normalGuy2 = new DanceAnimation("data/sprites/dancing-guy.png");
 		vador =	new DanceAnimation("data/sprites/dancing-vador.png");
@@ -36,9 +39,10 @@ public class Game implements ApplicationListener{
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);  
         
         spriteBatch.begin();
-        spriteBatch.draw(normalGuy1.getCurrentFrame(true), 100, 125); // draws the thing
-        spriteBatch.draw(normalGuy2.getCurrentFrame(true), 200, 100); // draws the thing
-        spriteBatch.draw(vador.getCurrentFrame(true), 300, 125); // draws the thing
+        spriteBatch.draw(background, 0, 0);
+        spriteBatch.draw(normalGuy1.getCurrentFrame(true), 100, 30); // draws the thing
+        spriteBatch.draw(vador.getCurrentFrame(true), 200, 5); // draws the thing
+        spriteBatch.draw(normalGuy2.getCurrentFrame(true), 300, 25); // draws the thing
         spriteBatch.end();
     }
 
