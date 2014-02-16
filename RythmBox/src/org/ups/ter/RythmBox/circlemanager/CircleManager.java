@@ -1,12 +1,17 @@
 package org.ups.ter.RythmBox.circlemanager;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 public class CircleManager {
 
@@ -15,7 +20,9 @@ public class CircleManager {
 	
 	private Texture[] numberTextures = new Texture[6];
 
-	private Set<Circle> circles = new HashSet<Circle>();
+	private List<Circle> circles = new ArrayList<Circle>();
+	
+	private int nextCircle;
 
 	
 	public CircleManager(int screenWidth, int screenHeight) {
@@ -25,7 +32,7 @@ public class CircleManager {
 		initTextures();
 	}
 	
-	public Set<Circle> getCircles() {
+	public List<Circle> getCircles() {
 		return circles;
 	}
 	
@@ -38,8 +45,12 @@ public class CircleManager {
 	}
 	
 
-	public Set<Circle> generateNewCircles() {
+	public List<Circle> generateNewCircles() {
 		int circlesNumber = MathUtils.random(1, 5);
+		
+		for(Circle c : circles) {
+			c.remove();
+		}
 		
 		circles.clear();
 		
@@ -50,9 +61,33 @@ public class CircleManager {
 			int circlePosX = gridCellWidth * cellX;
 			int circlePosY = gridCellHeight * cellY;
 			
-			circles.add(new Circle(numberTextures[i], circlePosX, circlePosY));
+			Circle tmpCircle = new Circle(this, i, numberTextures[i], circlePosX, circlePosY);
+			tmpCircle.setTouchable(Touchable.enabled);
+			tmpCircle.setZIndex(99);
+
+			circles.add(tmpCircle);
+			
+			System.out.println("Generated circle #" + i + "   posX=" + circlePosX + " posY=" + circlePosY);
 		}
+		
+		nextCircle = 0;
 		
 		return circles;
 	}
+
+	public void circleTouched(int number) {
+
+		if(number == nextCircle) {
+			circles.get(nextCircle).remove();
+			nextCircle++;
+			
+			// TODO 
+			// Increment score
+		} else {
+			// TODO
+			// Game over
+		}
+		
+	}
+
 }
