@@ -1,7 +1,6 @@
 package org.ups.ter.RythmBox;
 
 import java.util.List;
-import java.util.Set;
 
 import org.ups.ter.RythmBox.Frames.DanceAnimation;
 import org.ups.ter.RythmBox.circlemanager.Circle;
@@ -11,21 +10,15 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
-public class Game implements ApplicationListener{
-	private static final float		FR = 0.25f;
-    private static final int        FRAME_COLS = 5;         
-    private static final int        FRAME_ROWS = 3;         
+public class Game implements ApplicationListener {        
     
-    DanceAnimation                  normalGuy1;         
-    DanceAnimation                  normalGuy2; 
+    DanceAnimation                  normalGuy;         
     DanceAnimation                  vador; 
     
     SpriteBatch                     spriteBatch;
@@ -41,29 +34,24 @@ public class Game implements ApplicationListener{
     @Override
     public void create() {
         stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-
-    	background = new Texture(Gdx.files.internal("data/backgrounds/bucarest.png"));
         
-    	normalGuy1 = new DanceAnimation("data/sprites/dancing-guy.png");
-		normalGuy2 = new DanceAnimation("data/sprites/dancing-guy.png");
-		vador =	new DanceAnimation("data/sprites/dancing-vador.png");
-        spriteBatch = new SpriteBatch();
+    	spriteBatch = new SpriteBatch();
         circleManager = new CircleManager(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         
         Gdx.input.setInputProcessor(stage);
 
+        generateBackgorund();
+    	generateAnimations();
         scheduleCirclesRefresh();
     }
-
+    
     @Override
     public void render() {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);  
-        
+
         spriteBatch.begin();
-        spriteBatch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        spriteBatch.draw(normalGuy1.getCurrentFrame(true), 100, 30); // draws the thing
-        spriteBatch.draw(vador.getCurrentFrame(true), 200, 5); // draws the thing
-        spriteBatch.draw(normalGuy2.getCurrentFrame(true), 300, 25); // draws the thing
+        spriteBatch.draw(background,0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());    
+        drawDancingGuys();
         spriteBatch.end();
         
 		stage.draw();
@@ -105,6 +93,37 @@ public class Game implements ApplicationListener{
 				}
 		    }
 		}, delay, delay);	
+	}
+	
+	private void generateBackgorund(){
+		background = new Texture(Gdx.files.internal("data/backgrounds/bucarest.png"));
+	}
+	
+	private void generateAnimations(){
+		normalGuy = new DanceAnimation("data/sprites/dancing-guy.png");
+		vador =	new DanceAnimation("data/sprites/dancing-vador.png");
+	}
+	
+	private void drawDancingGuys(){
+		TextureRegion normalGuyTexture, vadorTexture;
+		int height = normalGuy.getScaledHeight();
+		int width = normalGuy.getScaledWidth();
+		
+		int thirdOfWidth = Gdx.graphics.getWidth()*33/100;
+		
+		int firstPositionWidth = thirdOfWidth/2-width/2;
+		int secondPositionWidth = firstPositionWidth+thirdOfWidth;
+		int thirdPositionWidth = secondPositionWidth+thirdOfWidth;
+		
+		int firstPositionHeight=Gdx.graphics.getHeight()*15/100;
+		int secondPosition=Gdx.graphics.getHeight()*5/100;
+		
+		normalGuyTexture = normalGuy.getCurrentFrame(true);
+		vadorTexture = vador.getCurrentFrame(true);	
+
+		spriteBatch.draw(normalGuyTexture, firstPositionWidth, firstPositionHeight, height, width);
+        spriteBatch.draw(normalGuyTexture, thirdPositionWidth, firstPositionHeight, height, width);
+        spriteBatch.draw(vadorTexture, secondPositionWidth, secondPosition, height, width); 
 	}
 	
 }

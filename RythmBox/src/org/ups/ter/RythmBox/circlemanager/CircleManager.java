@@ -23,17 +23,24 @@ public class CircleManager {
 	private List<Circle> circles = new ArrayList<Circle>();
 	
 	private int nextCircle;
-
 	
+	private int currentScore;
+
+
 	public CircleManager(int screenWidth, int screenHeight) {
 		gridCellWidth = screenWidth / 8;
 		gridCellHeight = screenWidth / 4;
+		currentScore = 0;
 		
 		initTextures();
 	}
 	
 	public List<Circle> getCircles() {
 		return circles;
+	}
+	
+	public int getScore() {
+		return currentScore;
 	}
 	
 	private void initTextures() {
@@ -80,9 +87,7 @@ public class CircleManager {
 		if(number == nextCircle) {
 			circles.get(nextCircle).remove();
 			nextCircle++;
-			
-			// TODO 
-			// Increment score
+			currentScore += 10;
 		} else {
 			// TODO
 			// Game over

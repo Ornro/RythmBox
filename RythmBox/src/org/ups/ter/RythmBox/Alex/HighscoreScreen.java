@@ -34,8 +34,6 @@ public class HighscoreScreen implements Screen {
 		buttonHighScore = new Texture(Gdx.files.internal("data/menu/hiscores.png"));
         game.m.stop();
         spriteBatch = new SpriteBatch();
-
-
 	}
 
 

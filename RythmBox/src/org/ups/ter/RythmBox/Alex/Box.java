@@ -57,7 +57,6 @@ public class Box extends Game {
 
 	public void dispose() {
 		spriteBatch.dispose();
-	
 	}
 
 }

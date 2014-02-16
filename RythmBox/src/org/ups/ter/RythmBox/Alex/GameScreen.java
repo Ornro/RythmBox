@@ -48,8 +48,6 @@ public class GameScreen implements Screen {
         game.m.stop();
         game.m.setSong("data/music/easy.mp3");
         game.m.playFrom();
-
-
 	}
 
 
