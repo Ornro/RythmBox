@@ -23,5 +23,9 @@ public class MusicPlayer {
 		song.stop();
 	}
 	
+	public void setSong(String location) {
+		song = Gdx.audio.newSound(Gdx.files.internal(location));
+	}
+	
 	
 }

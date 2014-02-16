@@ -1,5 +1,9 @@
 package org.ups.ter.RythmBox;
 
+
+
+import org.ups.ter.RythmBox.Alex.Box;
+
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -11,6 +15,6 @@ public class Main {
 		cfg.width = 480;
 		cfg.height = 320;
 		
-		new LwjglApplication(new GameMenu(), cfg);
+		new LwjglApplication(new Box(), cfg);
 	}
 }
