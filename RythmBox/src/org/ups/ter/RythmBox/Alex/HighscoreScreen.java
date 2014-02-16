@@ -21,10 +21,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class HighscoreScreen implements Screen {
-  final Box game;   
-  SpriteBatch                     spriteBatch;
-  Texture							background, buttonHighScore;
-  float stateTime;  // number of seconds since the animation started
+  final Box 					game;   
+  SpriteBatch					spriteBatch;
+  Texture						background, buttonHighScore;
+  float 						stateTime;  
  
 
 	public HighscoreScreen(final Box gam) {
@@ -35,8 +35,6 @@ public class HighscoreScreen implements Screen {
         game.m.stop();
         spriteBatch = new SpriteBatch();
 	}
-
-
 
 	@Override
 	public void render(float delta) {
@@ -51,8 +49,6 @@ public class HighscoreScreen implements Screen {
 			game.setScreen(new GameScreen(game));
 			dispose();
 		}
-        
-		
 	}
 
 	@Override
@@ -78,7 +74,5 @@ public class HighscoreScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		
 	}
-
 }

@@ -1,7 +1,5 @@
 package org.ups.ter.RythmBox;
 
-
-
 import org.ups.ter.RythmBox.Alex.Box;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;

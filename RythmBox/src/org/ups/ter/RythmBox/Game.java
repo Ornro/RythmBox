@@ -16,7 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
-public class Game implements ApplicationListener {        
+ 
+public class Game implements ApplicationListener {
     
     DanceAnimation                  normalGuy;         
     DanceAnimation                  vador; 
