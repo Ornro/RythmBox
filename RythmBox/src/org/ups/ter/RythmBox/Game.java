@@ -79,19 +79,15 @@ public class Game implements ApplicationListener {
 	}
 	
 	private void scheduleCirclesRefresh() {
-		float delay = 2.5f;
+		float delay = 0.518f;
 		
     	circles = circleManager.generateNewCircles();
 
 		Timer.schedule(new Task(){
 			@Override
 		    public void run() {
-				
-		    	circles = circleManager.generateNewCircles();
-		    	
-				for(Circle c : circles) {
-					stage.addActor(c);
-				}
+				Circle c = circleManager.generateCircles();
+				if (c!=null) stage.addActor(c);
 		    }
 		}, delay, delay);	
 	}
