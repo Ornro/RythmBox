@@ -12,9 +12,9 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "RythmBox";
 		cfg.useGL20 = false;
-		cfg.width = 480;
-		cfg.height = 320;
+		cfg.width = 1280;
+		cfg.height = 768;
 		
-		new LwjglApplication(new Box(), cfg);
+		new LwjglApplication(new Game(), cfg);
 	}
 }
