@@ -15,8 +15,7 @@ public class Game implements ApplicationListener{
     private static final int        FRAME_COLS = 5;         
     private static final int        FRAME_ROWS = 3;         
     
-    DanceAnimation                  normalGuy1;         
-    DanceAnimation                  normalGuy2; 
+    DanceAnimation                  normalGuy;         
     DanceAnimation                  vador; 
     
     SpriteBatch                     spriteBatch;
@@ -25,10 +24,10 @@ public class Game implements ApplicationListener{
     float stateTime;  // number of seconds since the animation started
     
     @Override
-    public void create() {   	
+    public void create() {   
+    	spriteBatch = new SpriteBatch();
     	generateBackgorund();
     	generateAnimations();
-        spriteBatch = new SpriteBatch();
     }
 
     @Override
@@ -36,10 +35,8 @@ public class Game implements ApplicationListener{
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);  
 
         spriteBatch.begin();
-        spriteBatch.draw(background,0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        spriteBatch.draw(normalGuy1.getCurrentFrame(true), 100, 30); // draws the thing
-        spriteBatch.draw(vador.getCurrentFrame(true), 200, 5); // draws the thing
-        spriteBatch.draw(normalGuy2.getCurrentFrame(true), 300, 25); // draws the thing
+        spriteBatch.draw(background,0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());    
+        drawDancingGuys();
         spriteBatch.end();
     }
 
@@ -72,9 +69,31 @@ public class Game implements ApplicationListener{
 	}
 	
 	private void generateAnimations(){
-		normalGuy1 = new DanceAnimation("data/sprites/dancing-guy.png");
-		normalGuy2 = new DanceAnimation("data/sprites/dancing-guy.png");
+		normalGuy = new DanceAnimation("data/sprites/dancing-guy.png");
 		vador =	new DanceAnimation("data/sprites/dancing-vador.png");
 	}
 	
+	private void drawDancingGuys(){
+		TextureRegion normalGuyTexture, vadorTexture;
+		int height = normalGuy.getScaledHeight();
+		int width = normalGuy.getScaledWidth();
+		
+		int thirdOfWidth = Gdx.graphics.getWidth()*33/100;
+		
+		int firstPositionWidth = thirdOfWidth/2-width/2;
+		int secondPositionWidth = firstPositionWidth+thirdOfWidth;
+		int thirdPositionWidth = secondPositionWidth+thirdOfWidth;
+		
+		int firstPositionHeight=Gdx.graphics.getHeight()*15/100;
+		int secondPosition=Gdx.graphics.getHeight()*5/100;
+		
+		normalGuyTexture = normalGuy.getCurrentFrame(true);
+		vadorTexture = vador.getCurrentFrame(true);	
+
+		spriteBatch.draw(normalGuyTexture, firstPositionWidth, firstPositionHeight, height, width);
+        spriteBatch.draw(normalGuyTexture, thirdPositionWidth, firstPositionHeight, height, width);
+        spriteBatch.draw(vadorTexture, secondPositionWidth, secondPosition, height, width); 
+	}
+	
+
 }
