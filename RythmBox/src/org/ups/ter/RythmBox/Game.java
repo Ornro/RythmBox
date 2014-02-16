@@ -6,14 +6,10 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Game implements ApplicationListener{
-	private static final float		FR = 0.25f;
-    private static final int        FRAME_COLS = 5;         
-    private static final int        FRAME_ROWS = 3;         
     
     DanceAnimation                  normalGuy;         
     DanceAnimation                  vador; 
