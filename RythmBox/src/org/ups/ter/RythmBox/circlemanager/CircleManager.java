@@ -53,7 +53,7 @@ public class CircleManager {
 	
 
 	public List<Circle> generateNewCircles() {
-		int circlesNumber = MathUtils.random(1, 5);
+		int circlesNumber = MathUtils.random(2, 4);
 		
 		for(Circle c : circles) {
 			c.remove();
@@ -61,10 +61,19 @@ public class CircleManager {
 		
 		circles.clear();
 		
-		for(int i = 0; i <= circlesNumber; i++) {
-			int cellX = MathUtils.random(1, 6);
-			int cellY = MathUtils.random(1, 3);
+		ArrayList<Integer> usedX = new ArrayList<Integer>();
+		ArrayList<Integer> usedY = new ArrayList<Integer>();
+		
+		for(int i = 0; i < circlesNumber; i++) {
+			int cellX, cellY;
+			do {
+				cellX = MathUtils.random(1, 6);
+				cellY = MathUtils.random(0, 2);
+			} while (usedX.contains(cellX) && usedY.contains(cellY));
 
+			usedX.add(cellX); 		
+			usedY.add(cellY);
+			
 			int circlePosX = gridCellWidth * cellX;
 			int circlePosY = gridCellHeight * cellY;
 			
@@ -73,8 +82,6 @@ public class CircleManager {
 			tmpCircle.setZIndex(99);
 
 			circles.add(tmpCircle);
-			
-			System.out.println("Generated circle #" + i + "   posX=" + circlePosX + " posY=" + circlePosY);
 		}
 		
 		nextCircle = 0;
@@ -85,12 +92,17 @@ public class CircleManager {
 	public void circleTouched(int number) {
 
 		if(number == nextCircle) {
+			// Bon cercle touchŽ
+			currentScore += (nextCircle+1) * 10;
 			circles.get(nextCircle).remove();
 			nextCircle++;
-			currentScore += 10;
 		} else {
-			// TODO
-			// Game over
+			// Mauvais cercle touchŽ
+			// On elve tous les cercles
+			for(Circle c : circles) {
+				c.remove();
+			}
+			Gdx.input.vibrate(600);
 		}
 		
 	}
