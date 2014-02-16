@@ -58,7 +58,10 @@ public class Game implements ApplicationListener {
     @Override
     public void render() {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);  
-
+        if (!musicPlayer.isPlaying()) {
+        	Gdx.app.exit();
+        }
+        
         spriteBatch.begin();
         spriteBatch.draw(background,0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());    
         drawDancingGuys();
@@ -103,7 +106,7 @@ public class Game implements ApplicationListener {
 	}
 	
 	private void generateBackgorund(){
-		background = new Texture(Gdx.files.internal("data/backgrounds/bucarest.png"));
+		background = new Texture(Gdx.files.internal("data/backgrounds/sarajevo.png"));
 	}
 	
 	private void generateAnimations(){
@@ -122,8 +125,8 @@ public class Game implements ApplicationListener {
 		int secondPositionWidth = firstPositionWidth+thirdOfWidth;
 		int thirdPositionWidth = secondPositionWidth+thirdOfWidth;
 		
-		int firstPositionHeight=Gdx.graphics.getHeight()*15/100;
-		int secondPosition=Gdx.graphics.getHeight()*5/100;
+		int firstPositionHeight=Gdx.graphics.getHeight()*5/100;
+		int secondPosition=Gdx.graphics.getHeight()*1/100;
 		
 		normalGuyTexture = normalGuy.getCurrentFrame(true);
 		vadorTexture = vador.getCurrentFrame(true);	

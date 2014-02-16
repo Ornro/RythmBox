@@ -28,4 +28,8 @@ public class MusicPlayer {
 		song = Gdx.audio.newMusic(Gdx.files.internal(location));
 	}
 	
+	public boolean isPlaying(){
+		return song.isPlaying();
+	}
+	
 }

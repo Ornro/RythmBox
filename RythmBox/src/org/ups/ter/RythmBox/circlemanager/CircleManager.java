@@ -104,10 +104,10 @@ public class CircleManager {
 			usedY.clear();
 			nextCircle = 0;
 			lastDisplay=0;
-			removeAllAt = MathUtils.random(3, 5);
+			removeAllAt = 3;
 		}
 		
-		if (lastDisplay > 1 || MathUtils.random(1, 2) == 1){
+		if (lastDisplay > 1 || MathUtils.random(10) <= 7){
 			lastDisplay=0;
 			currentNumberOfCircles ++;
 			return createCircle();
