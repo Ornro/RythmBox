@@ -25,21 +25,18 @@ public class Game implements ApplicationListener{
     float stateTime;  // number of seconds since the animation started
     
     @Override
-    public void create() {
-    	background = new Texture(Gdx.files.internal("data/backgrounds/bucarest.png"));
-        
-    	normalGuy1 = new DanceAnimation("data/sprites/dancing-guy.png");
-		normalGuy2 = new DanceAnimation("data/sprites/dancing-guy.png");
-		vador =	new DanceAnimation("data/sprites/dancing-vador.png");
+    public void create() {   	
+    	generateBackgorund();
+    	generateAnimations();
         spriteBatch = new SpriteBatch();
     }
 
     @Override
     public void render() {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);  
-        
+
         spriteBatch.begin();
-        spriteBatch.draw(background, 0, 0);
+        spriteBatch.draw(background,0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         spriteBatch.draw(normalGuy1.getCurrentFrame(true), 100, 30); // draws the thing
         spriteBatch.draw(vador.getCurrentFrame(true), 200, 5); // draws the thing
         spriteBatch.draw(normalGuy2.getCurrentFrame(true), 300, 25); // draws the thing
@@ -69,4 +66,15 @@ public class Game implements ApplicationListener{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	private void generateBackgorund(){
+		background = new Texture(Gdx.files.internal("data/backgrounds/bucarest.png"));
+	}
+	
+	private void generateAnimations(){
+		normalGuy1 = new DanceAnimation("data/sprites/dancing-guy.png");
+		normalGuy2 = new DanceAnimation("data/sprites/dancing-guy.png");
+		vador =	new DanceAnimation("data/sprites/dancing-vador.png");
+	}
+	
 }

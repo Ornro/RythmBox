@@ -29,17 +29,19 @@ public class DanceAnimation {
     }
     
     private void initialize(){
-		 danceSheet = new Texture(Gdx.files.internal(spritePath));     
-           TextureRegion[][] tmp = TextureRegion.split(danceSheet, 85, 120 );                               
-           danceFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-           int index = 0;
-           for (int i = 0; i < FRAME_ROWS; i++) {
-                   for (int j = 0; j < FRAME_COLS; j++) {
-                           	danceFrames[index++] = tmp[i][j];
-                   }
-           }
-           danceAnimation = new Animation(FRAME_RATE, danceFrames);              
-           stateTime = 0f;          
+    	danceSheet = new Texture(Gdx.files.internal(spritePath));     
+		TextureRegion[][] tmp = TextureRegion.split(danceSheet, 85, 120 );                               
+		danceFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+		
+		int index = 0;
+		for (int i = 0; i < FRAME_ROWS; i++) {
+			for (int j = 0; j < FRAME_COLS; j++) {
+				danceFrames[index++] = tmp[i][j];
+			}
+		}
+		
+		danceAnimation = new Animation(FRAME_RATE, danceFrames);              
+		stateTime = 0f;          
 	}
     
    public TextureRegion getCurrentFrame(boolean looping){
