@@ -1,18 +1,19 @@
 package org.ups.ter.RythmBox.Music;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 public class MusicPlayer {
 	
-	public Sound song;
+	public Music song;
 
 	public MusicPlayer(String location) {
-		song = Gdx.audio.newSound(Gdx.files.internal(location));	
+		song = Gdx.audio.newMusic(Gdx.files.internal(location));
 	}
 	
 	public void playFrom(float f) {		
-		song.play(f);					
+		song.play();					
 	}
 	
 	public void playFrom() {
@@ -24,8 +25,7 @@ public class MusicPlayer {
 	}
 	
 	public void setSong(String location) {
-		song = Gdx.audio.newSound(Gdx.files.internal(location));
+		song = Gdx.audio.newMusic(Gdx.files.internal(location));
 	}
-	
 	
 }

@@ -3,6 +3,7 @@ package org.ups.ter.RythmBox;
 import java.util.List;
 
 import org.ups.ter.RythmBox.Frames.DanceAnimation;
+import org.ups.ter.RythmBox.Music.MusicPlayer;
 import org.ups.ter.RythmBox.circlemanager.Circle;
 import org.ups.ter.RythmBox.circlemanager.CircleManager;
 
@@ -10,6 +11,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,6 +24,7 @@ public class Game implements ApplicationListener {
     DanceAnimation                  normalGuy;         
     DanceAnimation                  vador; 
     
+    BitmapFont						font;
     SpriteBatch                     spriteBatch;
     Texture							background;
     	
@@ -31,14 +34,20 @@ public class Game implements ApplicationListener {
     float stateTime;  // number of seconds since the animation started
     
 	private Stage stage;
+	private MusicPlayer musicPlayer;
     
     @Override
     public void create() {
         stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         
+        font = new BitmapFont();
+        font.setScale(3.0f);
     	spriteBatch = new SpriteBatch();
         circleManager = new CircleManager(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         
+		musicPlayer = new MusicPlayer("data/music/easy.mp3");
+		musicPlayer.playFrom(1.0f);
+		
         Gdx.input.setInputProcessor(stage);
 
         generateBackgorund();
@@ -53,6 +62,7 @@ public class Game implements ApplicationListener {
         spriteBatch.begin();
         spriteBatch.draw(background,0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());    
         drawDancingGuys();
+        font.draw(spriteBatch, "Score : " + circleManager.getScore(), 30, 50);
         spriteBatch.end();
         
 		stage.draw();
@@ -80,7 +90,7 @@ public class Game implements ApplicationListener {
 	
 	private void scheduleCirclesRefresh() {
 		float delay = 0.518f;
-		
+
     	circles = circleManager.generateNewCircles();
 
 		Timer.schedule(new Task(){
