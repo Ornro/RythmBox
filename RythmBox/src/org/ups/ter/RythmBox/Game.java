@@ -9,6 +9,7 @@ import org.ups.ter.RythmBox.circlemanager.CircleManager;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -33,6 +34,8 @@ public class Game implements ApplicationListener {
     
     float stateTime;  // number of seconds since the animation started
     
+	int	savedXTimes = 0;
+
 	private Stage stage;
 	private MusicPlayer musicPlayer;
     
@@ -58,17 +61,19 @@ public class Game implements ApplicationListener {
     @Override
     public void render() {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);  
-        if (!musicPlayer.isPlaying()) {
-        	Gdx.app.exit();
-        }
         
         spriteBatch.begin();
-        spriteBatch.draw(background,0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());    
-        drawDancingGuys();
-        font.draw(spriteBatch, "Score : " + circleManager.getScore(), 30, 50);
+              
+        if (!musicPlayer.isPlaying()) {
+        	saveHighScore();
+        } else {
+	        spriteBatch.draw(background,0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());    
+	        drawDancingGuys();
+	        font.draw(spriteBatch, "Score : " + circleManager.getScore(), 30, 50);
+        }
         spriteBatch.end();
         
-		stage.draw();
+        if (musicPlayer.isPlaying()) stage.draw();
     }
 
 	@Override
@@ -134,6 +139,39 @@ public class Game implements ApplicationListener {
 		spriteBatch.draw(normalGuyTexture, firstPositionWidth, firstPositionHeight, height, width);
         spriteBatch.draw(normalGuyTexture, thirdPositionWidth, firstPositionHeight, height, width);
         spriteBatch.draw(vadorTexture, secondPositionWidth, secondPosition, height, width); 
+	}
+	
+	private void displayGameOverScreen(){
+		font.setScale(10.0f);
+		int width=(int)font.getBounds("GAME OVER").width;
+		int height=(int)font.getBounds("GAME OVER").height;
+		circleManager.getScore();
+		
+		font.draw(spriteBatch, "GAME OVER", Gdx.graphics.getWidth()/2-width/2, Gdx.graphics.getHeight()/2+height);
+		
+		font.setScale(5.0f);
+		String score = "Score: "+circleManager.getScore();
+		width=(int)font.getBounds(score).width;
+		height=(int)font.getBounds(score).height;
+		font.draw(spriteBatch, score, Gdx.graphics.getWidth()/2-width/2, Gdx.graphics.getHeight()/2-height);
+	}
+	
+	private void saveHighScore() {
+		if (savedXTimes == 0){
+			FileHandle file = Gdx.files.external("RythmBox/highscore.txt");
+			System.out.println(file.path());
+			file.writeString(""+circleManager.getScore() + "\n", true);
+			savedXTimes ++;
+		} 
+		
+		displayGameOverScreen();
+		
+		Timer.schedule(new Task(){
+		    @Override
+		    public void run() {
+		    	Gdx.app.exit();
+		    }
+		}, 3);
 	}
 	
 }

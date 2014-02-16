@@ -60,9 +60,7 @@ public class Circle extends Actor implements Comparable {
         batch.draw(texture, this.posX, this.posY);
     }
 	
-	private final void handleTouch() {
-    	System.out.println("touch down");
-    	
+	private final void handleTouch() {    	
     	// addAction(Actions.fadeOut(0.5f));
     	parent.circleTouched(number);
 	}
