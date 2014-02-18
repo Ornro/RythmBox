@@ -16,6 +16,18 @@ public class GameActivity extends AndroidApplication {
 
 		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
 		cfg.useGL20 = false;
-		initialize(new Game(120,"data/music/easy.mp3"), cfg);		
+		
+		int choice = LevelChooser.CHOICE;
+		
+		switch (choice) {
+		
+			case 0:initialize(new Game(120,"data/music/easy.mp3"), cfg);break;
+			case 1:initialize(new Game(200,"data/music/medium.mp3"), cfg);break;
+			case 2:initialize(new Game(500,"data/music/hard.mp3"), cfg);break;
+	
+			default:break;
+		}
+		
+		
 	}
 }

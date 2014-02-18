@@ -23,6 +23,7 @@ public class LevelChooser extends Activity {
     /** Declaring an ArrayAdapter to set items to ListView */
     ArrayAdapter<String> adapter;
     
+    public static int CHOICE;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,18 +53,22 @@ public class LevelChooser extends Activity {
 					
 					if (position == 0) {
 						//start easy level
-						//method to launch Game					 
-						startActivity(new Intent(LevelChooser.this, GameActivity.class));
+						//method to launch Game	
+						CHOICE = 0;
+						
 					}
 					
 					if (position == 1) {
 						//start medium level
-						
+						CHOICE = 1;
 					}
 					
 					if (position == 2) {
 						//start hard level
+						CHOICE = 2;
 					}
+					
+					startActivity(new Intent(LevelChooser.this, GameActivity.class));
 					
 					 Toast.makeText(getApplicationContext(),
 		                      "Position :"+position, 
