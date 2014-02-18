@@ -1,70 +1,60 @@
 package org.ups.ter.RythmBox.circlemanager;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 
 public class Circle extends Actor implements Comparable {
+	private Texture 				texture;
+	private CircleManager			manager;
+	private final int 				number;
+	private int 					posX;
+	private int 					posY;
+	private int						numberOfTimesTapped = 0;
+	private boolean 				isAlive = true;
+	private Type 					type;
+	private boolean 				isAccepted = false;
 	
-	CircleManager parent;
+	public enum Type {
+	    CLICK_IT,
+	    AVOID_IT,
+	    TAP_IT
+	}
 	
-	int number;
-	
-	int posX;
-	int posY;
-	Texture texture;
-	
-	Circle(CircleManager parent, int number, Texture texture, int x, int y) {
-		this.parent = parent;
+	Circle(CircleManager parent, int number, Texture texture, int x, int y, int scaledWidth, int scaledHeight, Type type) {
+		this.manager = parent;
 		this.number = number;
 		this.posX = x;
 		this.posY = y;
 		this.texture = texture;
+		this.type = type;
 		
-		setWidth(128);
-		setHeight(128);
-		setBounds(x, y, 128, 128);
+		// scales the size of the circles at 10%
+		// of the screen size and set bounds
+		setWidth(scaledWidth);
+		setHeight(scaledHeight);
+		setBounds(this.posX, this.posY, scaledWidth, scaledHeight);
 		
-        addListener(new InputListener(){
-            
+        addListener(new ActorGestureListener(){
             @Override
-            public boolean touchDown(InputEvent event, float x, float y,
-            		int pointer, int button) {
-            		handleTouch();
-            	return true;
+            public void tap(InputEvent event, float x, float y, int count, int button) {
+            	handleTap(count);
             }
         });
 	}
-
-	public int getPosX() {
-		return posX;
-	}
-
-	public int getPosY() {
-		return posY;
-	}
-
-	public Texture getTexture() {
-		return texture;
+	
+	private final void handleTap(int count) {    
+		this.numberOfTimesTapped += 1;
+		manager.handleTap(this,numberOfTimesTapped);
 	}
 	
-	public int getNumber() {
-		return number;
-	}
-	
-
 	@Override
     public void draw(SpriteBatch batch, float alpha){
         batch.draw(texture, this.posX, this.posY);
     }
-	
-	private final void handleTouch() {    	
-    	// addAction(Actions.fadeOut(0.5f));
-    	parent.circleTouched(number);
-	}
-	
 	
 	@Override
 	public int hashCode() {
@@ -83,7 +73,7 @@ public class Circle extends Actor implements Comparable {
 		if (getClass() != obj.getClass())
 			return false;
 		Circle other = (Circle) obj;
-		if (number != other.number)
+		if (posX != other.posX || posY != other.posY)
 			return false;
 		
 		return true;
@@ -102,5 +92,39 @@ public class Circle extends Actor implements Comparable {
 		}
 	}
 	
+	public void kill(Texture newTexture){
+		this.texture = newTexture;
+		this.isAlive = false;
+		this.isAccepted = false;
+	}
+	
+	public void accept(Texture newTexture){
+		this.texture = newTexture;
+		this.isAccepted = true;
+	}
+	
+	public int getPosX() {
+		return posX;
+	}
+
+	public int getPosY() {
+		return posY;
+	}
+	
+	public int getNumber() {
+		return number;
+	}
+	
+	public boolean isAlive(){
+		return isAlive;
+	}
+	
+	public boolean isAccepted(){
+		return isAccepted;
+	}
+	
+	public Type getType(){
+		return this.type;
+	}
 	
 }

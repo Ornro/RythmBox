@@ -21,41 +21,61 @@ import com.badlogic.gdx.utils.Timer.Task;
 
  
 public class Game implements ApplicationListener {
+   
+    private DanceAnimation                  normalGuy;         
+    private DanceAnimation                  vador; 
     
-    DanceAnimation                  normalGuy;         
-    DanceAnimation                  vador; 
-    
-    BitmapFont						font;
-    SpriteBatch                     spriteBatch;
-    Texture							background;
+    private BitmapFont						font;
+    private SpriteBatch                     spriteBatch;
+    private Texture							background;
     	
-    List<Circle> 					circles;
-	CircleManager 					circleManager;
-    
-    float stateTime;  // number of seconds since the animation started
-    
-	int	savedXTimes = 0;
+    private CircleManager 					circleManager;
+	
+    private String 							songPath;
+    private float							frequency;
+    private int								savedXTimes = 0;
 
-	private Stage stage;
-	private MusicPlayer musicPlayer;
+	private Stage 							stage;
+	private MusicPlayer 					musicPlayer;
+	
+	/**
+	 * 
+	 * @param bpm battements par minute (rythme de la chanson)
+	 * @param songPath le chemin de la chanson eg: "data/music/easy.mp3"
+	 */
+	public Game(int bpm, String songPath){
+		super();
+		this.frequency = (1f/bpm)*60; //convertion bpm a hz
+		this.songPath = songPath;
+	}
+	
     
     @Override
     public void create() {
+    	// cree la scene
         stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         
+        // cree la police
         font = new BitmapFont();
         font.setScale(3.0f);
-    	spriteBatch = new SpriteBatch();
-        circleManager = new CircleManager(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         
-		musicPlayer = new MusicPlayer("data/music/easy.mp3");
+        
+    	spriteBatch = new SpriteBatch();
+    	
+    	// genere la musique, le controlleur des cercles 
+        circleManager = new CircleManager(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		musicPlayer = new MusicPlayer(songPath);
 		musicPlayer.playFrom(1.0f);
 		
-        Gdx.input.setInputProcessor(stage);
+		// cree le processeur pour les actions effectues sur la scene
+		// eg: events ... 
+		Gdx.input.setInputProcessor(stage);
 
+		// genere les animations, le fond et lance le système de generation des cercles
         generateBackgorund();
     	generateAnimations();
-        scheduleCirclesRefresh();
+
+    	scheduleCirclesRefresh(); // independant des annimations
     }
     
     @Override
@@ -63,7 +83,7 @@ public class Game implements ApplicationListener {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);  
         
         spriteBatch.begin();
-              
+        // game over quand la musique finit
         if (!musicPlayer.isPlaying()) {
         	saveHighScore();
         } else {
@@ -78,17 +98,14 @@ public class Game implements ApplicationListener {
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub	
 	}
 
 	@Override
@@ -97,26 +114,22 @@ public class Game implements ApplicationListener {
 	}
 	
 	private void scheduleCirclesRefresh() {
-		float delay = 0.518f;
-
-    	circles = circleManager.generateNewCircles();
-
 		Timer.schedule(new Task(){
 			@Override
 		    public void run() {
-				Circle c = circleManager.generateCircles();
-				if (c!=null) stage.addActor(c);
+				if (musicPlayer.isPlaying()) stage.addActor(circleManager.generateCircle());
 		    }
-		}, delay, delay);	
+		}, frequency, frequency);	
 	}
 	
 	private void generateBackgorund(){
 		background = new Texture(Gdx.files.internal("data/backgrounds/sarajevo.png"));
 	}
 	
+	
 	private void generateAnimations(){
-		normalGuy = new DanceAnimation("data/sprites/dancing-guy.png");
-		vador =	new DanceAnimation("data/sprites/dancing-vador.png");
+		normalGuy = new DanceAnimation("data/sprites/dancing-guy.png",frequency);
+		vador =	new DanceAnimation("data/sprites/dancing-vador.png",frequency);
 	}
 	
 	private void drawDancingGuys(){
@@ -159,7 +172,6 @@ public class Game implements ApplicationListener {
 	private void saveHighScore() {
 		if (savedXTimes == 0){
 			FileHandle file = Gdx.files.external("RythmBox/highscore.txt");
-			System.out.println(file.path());
 			file.writeString(""+circleManager.getScore() + "\n", true);
 			savedXTimes ++;
 		} 

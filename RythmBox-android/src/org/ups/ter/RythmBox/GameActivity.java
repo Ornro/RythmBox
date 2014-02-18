@@ -16,6 +16,6 @@ public class GameActivity extends AndroidApplication {
 
 		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
 		cfg.useGL20 = false;
-		initialize(new Game(), cfg);		
+		initialize(new Game(120,"data/music/easy.mp3"), cfg);		
 	}
 }
