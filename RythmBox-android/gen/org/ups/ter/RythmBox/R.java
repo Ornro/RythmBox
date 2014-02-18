@@ -9,14 +9,113 @@ package org.ups.ter.RythmBox;
 
 public final class R {
     public static final class attr {
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int buttonBarButtonStyle=0x7f010001;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int buttonBarStyle=0x7f010000;
+    }
+    public static final class color {
+        public static final int black_overlay=0x7f060000;
+    }
+    public static final class dimen {
+        /**  Default screen margins, per the Android Design guidelines. 
+
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
+    
+         */
+        public static final int activity_horizontal_margin=0x7f070000;
+        public static final int activity_vertical_margin=0x7f070001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int hiscores=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
+        public static final int menu_back=0x7f020002;
+        public static final int play=0x7f020003;
+        public static final int quit=0x7f020004;
+    }
+    public static final class id {
+        public static final int action_settings=0x7f0a0004;
+        public static final int imageViewExit=0x7f0a0003;
+        public static final int imageViewHighScore=0x7f0a0000;
+        public static final int imageViewPlay=0x7f0a0002;
+        public static final int list=0x7f0a0001;
     }
     public static final class layout {
-        public static final int main=0x7f030000;
+        public static final int activity_high_score=0x7f030000;
+        public static final int activity_level_chooser=0x7f030001;
+        public static final int activity_main=0x7f030002;
+    }
+    public static final class menu {
+        public static final int level_chooser=0x7f090000;
+    }
+    public static final class raw {
+        public static final int highscore=0x7f040000;
     }
     public static final class string {
-        public static final int app_name=0x7f040000;
+        public static final int action_settings=0x7f080005;
+        public static final int app_name=0x7f080000;
+        public static final int dummy_button=0x7f080002;
+        public static final int dummy_content=0x7f080003;
+        public static final int hello_world=0x7f080006;
+        public static final int title_activity_level_chooser=0x7f080004;
+        public static final int title_activity_menu=0x7f080001;
     }
+    public static final class style {
+        /**  Backward-compatible version of ?android:attr/buttonBarStyle 
+         */
+        public static final int ButtonBar=0x7f050002;
+        /**  Backward-compatible version of ?android:attr/buttonBarButtonStyle 
+         */
+        public static final int ButtonBarButton=0x7f050003;
+        public static final int FullscreenActionBarStyle=0x7f050004;
+        public static final int FullscreenTheme=0x7f050001;
+        public static final int MenuFont=0x7f050000;
+    }
+    public static final class styleable {
+        /** 
+         Declare custom theme attributes that allow changing which styles are
+         used for button bars depending on the API level.
+         ?android:attr/buttonBarStyle is new as of API 11 so this is
+         necessary to support previous API levels.
+    
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #ButtonBarContainerTheme_buttonBarButtonStyle org.ups.ter.RythmBox:buttonBarButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #ButtonBarContainerTheme_buttonBarStyle org.ups.ter.RythmBox:buttonBarStyle}</code></td><td></td></tr>
+           </table>
+           @see #ButtonBarContainerTheme_buttonBarButtonStyle
+           @see #ButtonBarContainerTheme_buttonBarStyle
+         */
+        public static final int[] ButtonBarContainerTheme = {
+            0x7f010000, 0x7f010001
+        };
+        /**
+          <p>This symbol is the offset where the {@link org.ups.ter.RythmBox.R.attr#buttonBarButtonStyle}
+          attribute's value can be found in the {@link #ButtonBarContainerTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name org.ups.ter.RythmBox:buttonBarButtonStyle
+        */
+        public static final int ButtonBarContainerTheme_buttonBarButtonStyle = 1;
+        /**
+          <p>This symbol is the offset where the {@link org.ups.ter.RythmBox.R.attr#buttonBarStyle}
+          attribute's value can be found in the {@link #ButtonBarContainerTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name org.ups.ter.RythmBox:buttonBarStyle
+        */
+        public static final int ButtonBarContainerTheme_buttonBarStyle = 0;
+    };
 }
