@@ -158,8 +158,8 @@ public class CircleManager {
 		int cellX, cellY;
 				
 		do {
-			cellX = MathUtils.random(1, numberOfHorizontalLines);
-			cellY = MathUtils.random(1, numberOfVerticalLines);
+			cellX = MathUtils.random(1, numberOfVerticalLines-2);
+			cellY = MathUtils.random(1, numberOfHorizontalLines-2);
 		} while (usedXCoordinates.contains(cellX) && usedYCoordinates.contains(cellY));
 
 		usedXCoordinates.add(cellX);
@@ -173,8 +173,8 @@ public class CircleManager {
 			tmpCircle = new Circle(this, nextToDisplay, numberTexturesClick[nextToDisplay], circlePosX, circlePosY, circleWidth, circleHeight, Type.CLICK_IT);
 		} else {
 			if (MathUtils.random(1) == 0 && !wasLastRed){ 
-				tmpCircle = new Circle(this, -1, noClickTexture, circlePosX, circlePosY, circleWidth, circleHeight, Type.AVOID_IT);
 				nextToDisplay--;
+				tmpCircle = new Circle(this, nextToDisplay, noClickTexture, circlePosX, circlePosY, circleWidth, circleHeight, Type.AVOID_IT);
 				wasLastRed = true;
 			} else {
 				tmpCircle = new Circle(this, nextToDisplay, numberTexturesTap[nextToDisplay], circlePosX, circlePosY, circleWidth, circleHeight, Type.TAP_IT);
@@ -184,6 +184,9 @@ public class CircleManager {
 		tmpCircle.setTouchable(Touchable.enabled);
 		tmpCircle.setZIndex(99);
 		circles.add(tmpCircle);
+		
+		System.out.println(tmpCircle.toString());
+		
 		return tmpCircle;
 	}
 	
