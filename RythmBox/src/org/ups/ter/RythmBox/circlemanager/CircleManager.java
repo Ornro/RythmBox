@@ -47,12 +47,11 @@ public class CircleManager {
 	 */
 	public CircleManager() {
 		scaleNumbers(10); // scale numbers
-		
+		scaleGrid();
 		
 		currentScore = 0;
 		
 		initTextures();
-		
 	}
 	
 	/**
@@ -65,18 +64,18 @@ public class CircleManager {
 		int windowWidth = Gdx.graphics.getWidth()*percentage/100;
 		int windowHeight = Gdx.graphics.getHeight()*percentage/100;
 
-		while (scaledHeight != windowHeight && scaledWidth != windowWidth){
-			if (scaledHeight > windowHeight && scaledWidth > windowWidth){
-				//scaledHeight--;
-				//scaledWidth--;
-			} else {
-				scaledHeight++;
-				scaledWidth++;
-			}
-		}
+//		while (scaledHeight != windowHeight && scaledWidth != windowWidth){
+//			if (scaledHeight > windowHeight && scaledWidth > windowWidth){
+//				scaledHeight--;
+//				scaledWidth--;
+//			} else {
+//				scaledHeight++;
+//				scaledWidth++;
+//			}
+//		}
 		
-		circleHeight = scaledHeight;
-		circleWidth = scaledWidth;
+		circleHeight = windowWidth;
+		circleWidth = windowWidth;
 		System.out.println("Height: "+circleHeight);
 		System.out.println("Width: "+circleWidth);
     }
@@ -87,6 +86,8 @@ public class CircleManager {
 		
 		numberOfHorizontalLines = screenWidth / circleWidth;
 		numberOfVerticalLines = screenHeight / circleHeight;
+		gridCellHeight = screenHeight / numberOfHorizontalLines;
+		gridCellWidth = screenWidth / numberOfVerticalLines;
 	}
 	
 	/**

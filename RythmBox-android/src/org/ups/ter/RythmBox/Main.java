@@ -41,8 +41,6 @@ public class Main extends Activity {
 
 		imageViewExit.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-
-				// Write your awesome code here
 				finish();
 				System.exit(0);
 			}

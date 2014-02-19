@@ -16,79 +16,66 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class LevelChooser extends Activity {
-	
-	 /** Items entered by the user is stored in this ArrayList variable */
-    ArrayList<String> list = new ArrayList<String>();
- 
-    /** Declaring an ArrayAdapter to set items to ListView */
-    ArrayAdapter<String> adapter;
-    
-    public static int CHOICE;
 
+	/** Items entered by the user is stored in this ArrayList variable */
+	ArrayList<String> list = new ArrayList<String>();
+
+	/** Declaring an ArrayAdapter to set items to ListView */
+	ArrayAdapter<String> adapter;
+
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_level_chooser);
-		
-		
-		 ListView listView = (ListView)findViewById(R.id.list);	        
-	        list.add("Easy");
-	        list.add("Medium");
-	        list.add("Hard");
-	        
-	       
-	        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
 
-	        listView.setAdapter(adapter);
-	        
-	        adapter.notifyDataSetChanged();
-	        
-	        // ListView Item Click Listener
-            listView.setOnItemClickListener(new OnItemClickListener() {
-
-
-				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1,
-						int position, long index) {
-					
-					if (position == 0) {
-						//start easy level
-						//method to launch Game	
-						CHOICE = 0;
-						
-					}
-					
-					if (position == 1) {
-						//start medium level
-						CHOICE = 1;
-					}
-					
-					if (position == 2) {
-						//start hard level
-						CHOICE = 2;
-					}
-					
-					startActivity(new Intent(LevelChooser.this, GameActivity.class));
-					
-					 Toast.makeText(getApplicationContext(),
-		                      "Position :"+position, 
-		                      Toast.LENGTH_LONG)
-		                      .show();
-					 
-					
-				}
-    
-             }); 
-	        
-	      
-		
+		initListView();
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.level_chooser, menu);
-		return true;
+	private void initListView() {
+		ListView listView = (ListView) findViewById(R.id.list);
+		list.add("Easy");
+		list.add("Medium");
+		list.add("Hard");
+
+		adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, list);
+
+		listView.setAdapter(adapter);
+
+		adapter.notifyDataSetChanged();
+
+		// ListView Item Click Listener
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long index) {
+
+				launchLevel(position);
+			}
+
+		});		
+	}
+
+	// Launch the selected level
+	protected void launchLevel(int position) {
+		
+		Intent tmpIntent = new Intent(LevelChooser.this, GameActivity.class);
+		
+		switch (position) {
+		case 0:
+		case 1:
+		case 2:
+			// Add extra data to our intent (level id)
+			// then start GameActivity
+			tmpIntent.putExtra("levelId", position);
+			startActivity(tmpIntent);
+			break;
+		default:
+			// Wrong position, do nothing
+			break;
+		}
 	}
 
 }

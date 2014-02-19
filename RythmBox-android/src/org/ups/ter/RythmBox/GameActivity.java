@@ -1,5 +1,6 @@
 package org.ups.ter.RythmBox;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +18,14 @@ public class GameActivity extends AndroidApplication {
 		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
 		cfg.useGL20 = false;
 		
-		int choice = LevelChooser.CHOICE;
+		// Default level
+		int choice = 0;
+		
+		// Get the level id sent by LevelChooser activity
+		Intent intent = getIntent();
+		if(null != intent) {
+			choice = intent.getIntExtra("levelId", 0);
+		}
 		
 		switch (choice) {
 		
