@@ -21,9 +21,9 @@ public class GameActivity extends AndroidApplication {
 		
 		switch (choice) {
 		
-			case 0:initialize(new Game(120,"data/music/easy.mp3"), cfg);break;
-			case 1:initialize(new Game(200,"data/music/medium.mp3"), cfg);break;
-			case 2:initialize(new Game(500,"data/music/hard.mp3"), cfg);break;
+			case 0:initialize(new Game(30,"data/music/easy.mp3"), cfg);break;
+			case 1:initialize(new Game(60,"data/music/medium.mp3"), cfg);break;
+			case 2:initialize(new Game(120,"data/music/hard.mp3"), cfg);break;
 	
 			default:break;
 		}

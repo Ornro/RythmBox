@@ -36,6 +36,8 @@ public class CircleManager {
 	
 	//Bricole et mascagne
 	private boolean					wasLastRed = false;
+	private int 					numberOfHorizontalLines;
+	private int 					numberOfVerticalLines;
 	
 	/**
 	 * Initialize manager
@@ -43,13 +45,48 @@ public class CircleManager {
 	 * @param screenWidth
 	 * @param screenHeight
 	 */
-	public CircleManager(int screenWidth, int screenHeight) {
-		gridCellWidth = screenWidth / 8;
-		gridCellHeight = screenWidth / 4;
+	public CircleManager() {
+		scaleNumbers(10); // scale numbers
+		
+		
 		currentScore = 0;
 		
 		initTextures();
-		scaleNumbers(20); // scale numbers
+		
+	}
+	
+	/**
+	 * scales the size of the circles 
+	 * @param percentage
+	 */
+	private void scaleNumbers(int percentage){
+		int scaledHeight = 128;
+    	int scaledWidth = 128;
+		int windowWidth = Gdx.graphics.getWidth()*percentage/100;
+		int windowHeight = Gdx.graphics.getHeight()*percentage/100;
+
+		while (scaledHeight != windowHeight && scaledWidth != windowWidth){
+			if (scaledHeight > windowHeight && scaledWidth > windowWidth){
+				//scaledHeight--;
+				//scaledWidth--;
+			} else {
+				scaledHeight++;
+				scaledWidth++;
+			}
+		}
+		
+		circleHeight = scaledHeight;
+		circleWidth = scaledWidth;
+		System.out.println("Height: "+circleHeight);
+		System.out.println("Width: "+circleWidth);
+    }
+	
+	private void scaleGrid(){
+		int screenWidth = Gdx.graphics.getWidth();
+		int screenHeight = Gdx.graphics.getHeight();
+		
+		numberOfHorizontalLines = screenWidth / circleWidth;
+		numberOfVerticalLines = screenHeight / circleHeight;
 	}
 	
 	/**
@@ -78,30 +115,7 @@ public class CircleManager {
 		noClickTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	}
 	
-	/**
-	 * scales the size of the circles 
-	 * @param percentage
-	 */
-	private void scaleNumbers(int percentage){
-		int scaledHeight = 128;
-    	int scaledWidth = 128;
-		int windowWidth = Gdx.graphics.getWidth()*percentage/100;
-		int windowHeight = Gdx.graphics.getHeight()*percentage/100;
 
-		while (scaledHeight != windowHeight && scaledWidth != windowWidth){
-			if (scaledHeight > windowHeight && scaledWidth > windowWidth){
-				scaledHeight--;
-				scaledWidth--;
-			} else {
-				scaledHeight++;
-				scaledWidth++;
-			}
-		}
-		
-		circleHeight = scaledHeight;
-		circleWidth = scaledWidth;
-		
-    }
 	
 	public void calculateScoreAndClean(){
 		for(Circle c : circles) {
@@ -143,8 +157,8 @@ public class CircleManager {
 		int cellX, cellY;
 				
 		do {
-			cellX = MathUtils.random(1, 6);
-			cellY = MathUtils.random(0, 2);
+			cellX = MathUtils.random(1, numberOfHorizontalLines);
+			cellY = MathUtils.random(1, numberOfVerticalLines);
 		} while (usedXCoordinates.contains(cellX) && usedYCoordinates.contains(cellY));
 
 		usedXCoordinates.add(cellX);

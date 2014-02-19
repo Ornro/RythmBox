@@ -53,7 +53,8 @@ public class Circle extends Actor implements Comparable {
 	
 	@Override
     public void draw(SpriteBatch batch, float alpha){
-        batch.draw(texture, this.posX, this.posY);
+		System.out.println("Drawing :"+this.getHeight());
+        batch.draw(texture, this.posX, this.posY,this.getWidth(),this.getHeight());
     }
 	
 	@Override

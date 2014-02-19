@@ -63,7 +63,7 @@ public class Game implements ApplicationListener {
     	spriteBatch = new SpriteBatch();
     	
     	// genere la musique, le controlleur des cercles 
-        circleManager = new CircleManager(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        circleManager = new CircleManager();
 		musicPlayer = new MusicPlayer(songPath);
 		musicPlayer.playFrom(1.0f);
 		
